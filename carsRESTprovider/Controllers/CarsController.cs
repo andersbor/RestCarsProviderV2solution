@@ -26,7 +26,8 @@ namespace carsRESTprovider.Controllers
         }
 
         // GET: api/Cars/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet]
+        [Route("{id}")]
         public Car Get(int id)
         {
             return Cars.FirstOrDefault(car => car.Id == id);
@@ -42,7 +43,7 @@ namespace carsRESTprovider.Controllers
         }
 
         // PUT: api/Cars/5
-        //[HttpPut("{id}")]
+        [HttpPut("{id}")]
         public void Put(int id, [FromBody] string car)
         {
             //int index = Cars.FindIndex(car1 => car1.Id == id);

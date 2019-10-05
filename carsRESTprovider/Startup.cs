@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,8 @@ namespace carsRESTprovider
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info {Title = "Cars API", Version = "v1.0"});
+                // https://stackoverflow.com/questions/50623420/migrating-to-net-core-2-1-breaks-swagger-ui
+                //c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
         }
 
