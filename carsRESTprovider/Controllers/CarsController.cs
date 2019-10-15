@@ -33,6 +33,20 @@ namespace carsRESTprovider.Controllers
             return Cars.FirstOrDefault(car => car.Id == id);
         }
 
+        [HttpGet]
+        [Route("vendor/{vendorname}")]
+        public IEnumerable<Car> GetByVendorName(string vendorname)
+        {
+            return Cars.Where(car => car.Vendor.StartsWith(vendorname));
+        }
+
+        [HttpGet]
+        [Route("model/{model}")]
+        public IEnumerable<Car> GetBymodel(string model)
+        {
+            return Cars.Where(car => car.Model.StartsWith(model));
+        }
+
         // POST: api/Cars
         [HttpPost]
         public int Post([FromBody] Car car)
