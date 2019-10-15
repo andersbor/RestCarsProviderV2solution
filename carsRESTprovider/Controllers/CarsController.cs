@@ -55,12 +55,16 @@ namespace carsRESTprovider.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
+        [ProducesResponseType(204)] // no content
         [ProducesResponseType(400)]
         [Route("price/{fromPrice:int}/{toPrice:int}")]
         public ActionResult<IEnumerable<Car>> GetByPriceRange(int fromPrice, int toPrice)
         {
             if (fromPrice > toPrice) return BadRequest();
-            return Cars.FindAll(car => fromPrice <= car.Price && car.Price <= toPrice);
+
+            List<Car> cars =  Cars.FindAll(car => fromPrice <= car.Price && car.Price <= toPrice);
+            if (cars.Count == 0) return NoContent();
+            return cars;
         }
 
         // POST: api/Cars
