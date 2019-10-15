@@ -37,14 +37,24 @@ namespace carsRESTprovider.Controllers
         [Route("vendor/{vendorname}")]
         public IEnumerable<Car> GetByVendorName(string vendorname)
         {
-            return Cars.Where(car => car.Vendor.StartsWith(vendorname));
+            return Cars.FindAll(car => car.Vendor.StartsWith(vendorname));
         }
 
         [HttpGet]
         [Route("model/{model}")]
         public IEnumerable<Car> GetBymodel(string model)
         {
-            return Cars.Where(car => car.Model.StartsWith(model));
+            return Cars.FindAll(car => car.Model.StartsWith(model));
+        }
+
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [Route("price/{fromPrice:int}/{toPrice:int}")]
+        public ActionResult<IEnumerable<Car>> GetByPriceRange(int fromPrice, int toPrice)
+        {
+            if (fromPrice > toPrice) return BadRequest();
+            return Cars.FindAll(car => fromPrice <= car.Price && car.Price <= toPrice);
         }
 
         // POST: api/Cars
