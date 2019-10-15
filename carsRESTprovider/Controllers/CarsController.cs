@@ -28,12 +28,18 @@ namespace carsRESTprovider.Controllers
         // GET: api/Cars/5
         [HttpGet]
         [Route("{id}")]
-        public Car Get(int id)
+        [ProducesResponseType(200)]
+        [ProducesResponseType(204)] // no content
+        public ActionResult<Car> Get(int id)
         {
-            return Cars.FirstOrDefault(car => car.Id == id);
+            Car cars = Cars.FirstOrDefault(car => car.Id == id);
+            if (cars == null) return NoContent();
+            else return cars;
         }
 
         [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(204)] // no content
         [Route("vendor/{vendorname}")]
         public IEnumerable<Car> GetByVendorName(string vendorname)
         {
@@ -68,11 +74,14 @@ namespace carsRESTprovider.Controllers
 
         // PUT: api/Cars/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string car)
+        public ActionResult<Car> Put(int id, [FromBody] Car car)
         {
-            //int index = Cars.FindIndex(car1 => car1.Id == id);
-            //if (index > 0) { }
-
+            Car c = Cars.FirstOrDefault(c1 => c1.Id == id);
+            if (c == null) { return NoContent(); }
+            c.Vendor = car.Vendor;
+            c.Model = car.Model;
+            c.Price = car.Price;
+            return c;
         }
 
         // DELETE: api/ApiWithActions/5
