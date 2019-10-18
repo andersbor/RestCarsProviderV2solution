@@ -20,7 +20,7 @@ namespace carsRESTprovider.Controllers
 
         // GET: api/Cars
         [HttpGet]
-        public IEnumerable<Car> Get()
+        public IEnumerable<Car> GetAll()
         {
             return Cars;
         }
@@ -30,7 +30,7 @@ namespace carsRESTprovider.Controllers
         [Route("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(204)] // no content
-        public ActionResult<Car> Get(int id)
+        public ActionResult<Car> GetById(int id)
         {
             Car cars = Cars.FirstOrDefault(car => car.Id == id);
             if (cars == null) return NoContent();
@@ -40,10 +40,10 @@ namespace carsRESTprovider.Controllers
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(204)] // no content
-        [Route("vendor/{vendorname}")]
-        public IEnumerable<Car> GetByVendorName(string vendorname)
+        [Route("vendor/{vendor}")]
+        public IEnumerable<Car> GetByVendor(string vendor)
         {
-            return Cars.FindAll(car => car.Vendor.StartsWith(vendorname));
+            return Cars.FindAll(car => car.Vendor.StartsWith(vendor));
         }
 
         [HttpGet]
