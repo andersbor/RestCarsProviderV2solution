@@ -32,16 +32,16 @@ namespace carsRESTprovider.Controllers
         [ProducesResponseType(204)] // no content
         public ActionResult<Car> GetById(int id)
         {
-            Car cars = Cars.FirstOrDefault(car => car.Id == id);
-            if (cars == null) return NoContent();
-            else return cars;
+            Car car = Cars.FirstOrDefault(c => c.Id == id);
+            if (car == null) return NoContent();
+            else return car;
         }
 
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(204)] // no content
         [Route("vendor/{vendor}")]
-        public IEnumerable<Car> GetByVendor(string vendor)
+        public List<Car> GetByVendor(string vendor)
         {
             return Cars.FindAll(car => car.Vendor.StartsWith(vendor));
         }
